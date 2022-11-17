@@ -58,6 +58,7 @@
 
 .commentContent p {
     margin-top: 1rem;
+    word-break: break-word;
     color: var(--gray-300);
 }
 

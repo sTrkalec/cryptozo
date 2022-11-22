@@ -1,4 +1,4 @@
-import {format, formatDistanceToNow} from "date-fns"
+import { format, formatDistanceToNow } from "date-fns"
 import ptBR from "date-fns/locale/pt-BR"
 import { Comment } from "./Comment"
 import { Avatar } from "./Avatar"
@@ -7,13 +7,13 @@ import { useState } from "react"
 
 
 
-export function Post({author, publishedAt, content, id}) {
-
-    const [comments, setComments] = useState([  
+export function Post({ author, publishedAt, content, }) {
+    const [comments, setComments] = useState([
     ])
 
+
     const [newCommentText, setNewCommentText] = useState("")
-    
+
     const publishedDateForm = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h' ", {
         locale: ptBR
     })
@@ -23,27 +23,29 @@ export function Post({author, publishedAt, content, id}) {
         addSuffix: true
     })
 
-    function handleCreateNewComment(){
+    function handleCreateNewComment() {
         event.preventDefault()
 
         setComments([...comments, newCommentText])
         setNewCommentText("")
     }
 
-    function handleNewCommentChange(){
+    function handleNewCommentChange() {
+        event.target.setCustomValidity("")
         setNewCommentText(event.target.value)
     }
 
-    function handleNewCommentInvalid(){
-        event.target.setCustomValidity("È OBRIGADTIR")
+    function handleNewCommentInvalid() {
+        event.target.setCustomValidity("Campo inválido")
     }
 
-    function deleteComment(commentsToDelete){
+    function deleteComment(commentsToDelete) {
         const commentsWithoutDeletedOne = comments.filter(comment => {
-            return comment !== commentsToDelete;
+            return comment !== commentsToDelete
         })
         setComments(commentsWithoutDeletedOne)
     }
+    const isNewCommentEmpy = newCommentText.length == 0
 
     return (
         <article className={styles.post}>
@@ -61,15 +63,15 @@ export function Post({author, publishedAt, content, id}) {
                 </time>
             </header>
             <div className={styles.content}>
-               {content.map(line => {
-                    if(line.type == "paragraph"){
+                {content.map(line => {
+                    if (line.type == "paragraph") {
                         return <p key={line.content}>{line.content}</p>
                     }
-                    else if(line.type == "link"){
+                    else if (line.type == "link") {
                         return <p key={line.content}><a href="#">{line.content}</a></p>
 
                     }
-               })}
+                })}
             </div>
 
             <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
@@ -83,13 +85,13 @@ export function Post({author, publishedAt, content, id}) {
                     required
                 />
                 <footer>
-                    <button type="submit">Publicar</button>
+                    <button type="submit" disabled={isNewCommentEmpy}>Publicar</button>
                 </footer>
             </form>
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment key={comment} content={comment} onDeleteComment={deleteComment}/>
+                    return <Comment key={comment} content={comment} onDeleteComment={deleteComment} />
                 })}
             </div>
         </article>

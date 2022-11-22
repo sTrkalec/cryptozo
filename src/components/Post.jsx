@@ -47,6 +47,7 @@ export function Post({ author, publishedAt, content, }) {
     }
     const isNewCommentEmpy = newCommentText.length == 0
 
+
     return (
         <article className={styles.post}>
             <header>

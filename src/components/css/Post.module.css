@@ -108,13 +108,12 @@
 
 .commentForm button:disabled {
     opacity: 0.7;
-    cursor: not-allowed;
 }
 
-.commentForm footer {
+/* .commentForm footer {
     visibility: hidden;
     max-height: 0;
-}
+} */
 
 .commentList {
     margin-top: 2rem;
